@@ -1,0 +1,18 @@
+language: php
+
+sudo: false
+
+php:
+  - 5.5.9
+  - 5.6
+  - 7.0
+  - hhvm
+before_script:
+  - "composer install"
+
+script:
+  - "vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text"
+
+after_script:
+  - CODECLIMATE_REPO_TOKEN=5426321abe5c35b34556518e91a26d4b4fa8798c3052e90245d8572ce5c9673d ./vendor/bin/test-reporter
+  - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
